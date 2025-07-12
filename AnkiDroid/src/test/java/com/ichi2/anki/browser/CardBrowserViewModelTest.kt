@@ -25,7 +25,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.Flag
-import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
@@ -71,6 +71,7 @@ import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.ensureNoOpsExecuted
 import com.ichi2.testutils.ensureOpsExecuted
+import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
@@ -160,7 +161,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
             val addIntent = CardBrowser.createAddNoteLauncher(this).toIntent(mockIt())
             val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
-            IntentAssert.doesNotHaveExtra(bundle, NoteEditor.EXTRA_DID)
+            IntentAssert.doesNotHaveExtra(bundle, NoteEditorFragment.EXTRA_DID)
         }
 
     @Test

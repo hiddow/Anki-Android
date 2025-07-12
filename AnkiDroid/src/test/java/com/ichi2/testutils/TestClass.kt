@@ -17,13 +17,7 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
-import android.view.Menu
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
-import anki.collection.OpChanges
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.R
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.Card
@@ -37,9 +31,7 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
-import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.ext.addNote
-import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -49,7 +41,6 @@ import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.test.assertNotNull
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -112,17 +103,6 @@ interface TestClass {
         check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
-
-    suspend fun addBasicNoteWithOp(
-        fields: List<String> = listOf("foo", "bar"),
-        noteType: NotetypeJson = col.notetypes.byName("Basic")!!,
-    ): Note =
-        col.newNote(noteType).also { note ->
-            for ((i, field) in fields.withIndex()) {
-                note.setField(i, field)
-            }
-            undoableOp<OpChanges> { col.addNote(note, Consts.DEFAULT_DECK_ID) }
-        }
 
     /**
      * Create a new note type in the collection.
@@ -212,20 +192,6 @@ interface TestClass {
         addNotes(1)
     }
 
-    /**
-     * Closes and reopens the backend using the provided [language], typically for
-     * [CollectionManager.TR] calls
-     *
-     * This does not set the [application locales][AppCompatDelegate.setApplicationLocales]
-     *
-     * @param language tag in the form: `de` or `zh-CN`
-     */
-    suspend fun Collection.reopenWithLanguage(language: String) {
-        LanguageUtil.setDefaultBackendLanguages(language)
-        CollectionManager.discardBackend()
-        CollectionManager.getColUnsafe()
-    }
-
     fun selectDefaultDeck() {
         col.decks.select(Consts.DEFAULT_DECK_ID)
     }
@@ -265,14 +231,6 @@ interface TestClass {
         col.updateNote(this)
         return this
     }
-
-    /** Helper method to update a note */
-    @SuppressLint("CheckResult")
-    suspend fun Note.updateOp(block: Note.() -> Unit): Note =
-        this.also { note ->
-            block(note)
-            undoableOp<OpChanges> { col.updateNote(note) }
-        }
 
     /** Helper method to all cards of a note */
     fun Note.updateCards(update: Card.() -> Unit): Note {
@@ -335,8 +293,6 @@ interface TestClass {
     fun Note.flush() {
         col.updateNote(this)
     }
-
-    fun AnkiActivity.menu(): Menu = assertNotNull(findViewById<Toolbar>(R.id.toolbar)?.menu)
 
     /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
      * takes care of updating the dispatcher used by CollectionManager as well.
