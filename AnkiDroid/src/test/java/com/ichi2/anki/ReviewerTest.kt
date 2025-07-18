@@ -33,6 +33,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
+import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Card
@@ -43,15 +44,14 @@ import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
-import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
-import com.ichi2.testutils.ext.addNote
 import com.ichi2.utils.BASIC_NOTE_TYPE_NAME
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
@@ -136,7 +136,7 @@ class ReviewerTest : RobolectricTest() {
         // Assert
         val shadowApplication = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Application>())
         val intent = shadowApplication.nextStartedActivity
-        val fragmentBundle = intent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
+        val fragmentBundle = intent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
         val actualAnimation =
             BundleCompat.getParcelable(
                 fragmentBundle!!,

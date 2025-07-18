@@ -92,7 +92,6 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Up
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.common.Flaky
@@ -117,6 +116,7 @@ import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.startsWith
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
@@ -172,28 +172,6 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
-    fun selectNoneIsVisibleOnceSelectAllCalled() =
-        runTest {
-            val browser = browserWithMultipleNotes
-            selectMenuItem(browser, R.id.action_select_all)
-            assertThat(browser.isShowingSelectNone, equalTo(true))
-        }
-
-    @Test
-    fun selectNoneIsVisibleWhenSelectingOne() {
-        val browser = browserWithMultipleNotes
-        selectOneOfManyCards(browser)
-        assertThat(browser.isShowingSelectNone, equalTo(true))
-    }
-
-    @Test
-    fun selectAllIsVisibleWhenSelectingOne() {
-        val browser = browserWithMultipleNotes
-        selectOneOfManyCards(browser)
-        assertThat(browser.isShowingSelectAll, equalTo(true))
-    }
-
-    @Test
     fun testOnDeckSelected() =
         withBrowser(noteCount = 1) {
             // Arrange
@@ -220,24 +198,6 @@ class CardBrowserTest : RobolectricTest() {
         selectOneOfManyCards(browser)
         assertThat(browser.viewModel.isInMultiSelectMode, equalTo(true))
     }
-
-    @Test
-    @Flaky(os = OS.WINDOWS, "Expected `true`, got `false`")
-    fun browserIsInMultiSelectModeWhenSelectingAll() =
-        runTest {
-            val browser = browserWithMultipleNotes
-            selectMenuItem(browser, R.id.action_select_all)
-            assertThat(browser.viewModel.isInMultiSelectMode, equalTo(true))
-        }
-
-    @Test
-    fun browserIsNotInMultiSelectModeWhenSelectingNone() =
-        runTest {
-            val browser = browserWithMultipleNotes
-            selectMenuItem(browser, R.id.action_select_all)
-            selectMenuItem(browser, R.id.action_select_none)
-            assertThat(browser.viewModel.isInMultiSelectMode, equalTo(false))
-        }
 
     @Test
     fun browserDoesNotFailWhenSelectingANonExistingCard() =
@@ -562,8 +522,8 @@ class CardBrowserTest : RobolectricTest() {
             assertThat("The target deck should be selected", b.lastDeckId, equalTo(targetDid))
 
             val addIntent = b.addNoteLauncher.toIntent(targetContext)
-            val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
-            IntentAssert.hasExtra(bundle, NoteEditor.EXTRA_DID, targetDid)
+            val bundle = addIntent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
+            IntentAssert.hasExtra(bundle, NoteEditorFragment.EXTRA_DID, targetDid)
         }
 
     /** 7420  */
@@ -576,8 +536,8 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("The initial deck should be selected", b.lastDeckId, equalTo(initialDid))
 
         val addIntent = b.addNoteLauncher.toIntent(targetContext)
-        val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
-        IntentAssert.hasExtra(bundle, NoteEditor.EXTRA_DID, initialDid)
+        val bundle = addIntent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
+        IntentAssert.hasExtra(bundle, NoteEditorFragment.EXTRA_DID, initialDid)
     }
 
     @Test
@@ -1717,12 +1677,6 @@ val CardBrowser.isShowingSelectAll: Boolean
     get() {
         waitForAsyncTasksToComplete()
         return actionBarMenu?.findItem(R.id.action_select_all)?.isVisible == true
-    }
-
-val CardBrowser.isShowingSelectNone: Boolean
-    get() {
-        waitForAsyncTasksToComplete()
-        return actionBarMenu?.findItem(R.id.action_select_none)?.isVisible == true
     }
 
 val CardBrowser.columnHeadingViews

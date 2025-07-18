@@ -196,14 +196,17 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    /** Only enforce permissions for queries and inserts on Android M and above, or if its a 'rogue client'  */
-    private fun shouldEnforceQueryOrInsertSecurity(): Boolean = knownRogueClient()
+    /**
+     * Enforce permissions for queries and inserts on Android M and above.
+     * @see knownRogueClient
+     */
+    private fun shouldEnforceQueryOrInsertSecurity(): Boolean = true
 
-    /** Enforce permissions for all updates on Android M and above. Otherwise block depending on URI and client app  */
-    private fun shouldEnforceUpdateSecurity(uri: Uri): Boolean {
-        val whitelist = listOf(NOTES_ID_CARDS_ORD, NOTE_TYPES_ID, NOTE_TYPES_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED)
-        return !whitelist.contains(sUriMatcher.match(uri)) || knownRogueClient()
-    }
+    /**
+     * Enforce permissions for all updates on Android M and above.
+     * @see knownRogueClient
+     */
+    private fun shouldEnforceUpdateSecurity(uri: Uri): Boolean = true
 
     override fun query(
         uri: Uri,
@@ -969,7 +972,7 @@ class CardContentProvider : ContentProvider() {
                 } catch (filteredSubdeck: BackendDeckIsFilteredException) {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
-                val deck: Deck = col.decks.get(did)!!
+                val deck: Deck = col.decks.getLegacy(did)!!
                 @KotlinCleanup("remove the null check if deck is found to be not null in DeckManager.get(Long)")
                 @Suppress("SENSELESS_COMPARISON")
                 if (deck != null) {
@@ -1247,7 +1250,7 @@ class CardContentProvider : ContentProvider() {
         col: Collection,
         did: DeckId,
     ): Boolean =
-        if (col.decks.get(did) != null) {
+        if (col.decks.getLegacy(did) != null) {
             col.decks.select(did)
             true
         } else {

@@ -27,9 +27,8 @@ import com.ichi2.anki.libanki.Consts.STARTING_FACTOR
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.libanki.sched.Ease
-import com.ichi2.testutils.AnkiAssert
+import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.ext.addNote
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -37,6 +36,7 @@ import org.json.JSONArray
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import java.time.Instant
 import java.time.ZoneId
@@ -128,7 +128,7 @@ open class SchedulerTest : JvmTest() {
         }
         // give the child deck a different configuration
         val c2 = col.decks.addConfigReturningId("new conf")
-        col.decks.setConfigIdForDeckDict(col.decks.get(deck2)!!, c2)
+        col.decks.setConfigIdForDeckDict(col.decks.getLegacy(deck2)!!, c2)
         // both confs have defaulted to a limit of 20
         Assert.assertEquals(20, col.sched.newCount().toLong())
         // first card we get comes from parent
@@ -242,7 +242,7 @@ open class SchedulerTest : JvmTest() {
         col.sched.answerCard(c, Ease.EASY)
         Assert.assertEquals(CardType.Rev, c.type)
         Assert.assertEquals(QueueType.Rev, c.queue)
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 4))
+        Assert.assertTrue(checkRevIvl(c, 4))
         // revlog should have been updated each time
         Assert.assertEquals(
             5,
@@ -420,7 +420,7 @@ open class SchedulerTest : JvmTest() {
         col.sched.answerCard(c, Ease.HARD)
         Assert.assertEquals(QueueType.Rev, c.queue)
         // the new interval should be (100) * 1.2 = 120
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 120))
+        Assert.assertTrue(checkRevIvl(c, 120))
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         // factor should have been decremented
         Assert.assertEquals(2350, c.factor)
@@ -433,7 +433,7 @@ open class SchedulerTest : JvmTest() {
         col.updateCard(c, skipUndoEntry = true)
         col.sched.answerCard(c, Ease.GOOD)
         // the new interval should be (100 + 8/2) * 2.5 = 260
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 260))
+        Assert.assertTrue(checkRevIvl(c, 260))
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         // factor should have been left alone
         Assert.assertEquals(STARTING_FACTOR, c.factor)
@@ -443,7 +443,7 @@ open class SchedulerTest : JvmTest() {
         col.updateCard(c, skipUndoEntry = true)
         col.sched.answerCard(c, Ease.EASY)
         // the new interval should be (100 + 8) * 2.5 * 1.3 = 351
-        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 351))
+        Assert.assertTrue(checkRevIvl(c, 351))
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         // factor should have been increased
         Assert.assertEquals(2650, c.factor)
@@ -488,11 +488,11 @@ open class SchedulerTest : JvmTest() {
         // Upstream, there is no space in 2d
         Assert.assertEquals(
             "2d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD)),
+            withoutUnicodeIsolation(col.sched.nextIvlStr(c, Ease.HARD)),
         )
         Assert.assertEquals(
             "3d",
-            AnkiAssert.without_unicode_isolation(
+            withoutUnicodeIsolation(
                 col.sched.nextIvlStr(
                     c,
                     Ease.GOOD,
@@ -501,7 +501,7 @@ open class SchedulerTest : JvmTest() {
         )
         Assert.assertEquals(
             "4d",
-            AnkiAssert.without_unicode_isolation(
+            withoutUnicodeIsolation(
                 col.sched.nextIvlStr(
                     c,
                     Ease.EASY,
@@ -515,7 +515,7 @@ open class SchedulerTest : JvmTest() {
         col.decks.save(conf)
         Assert.assertEquals(
             "1d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD)),
+            withoutUnicodeIsolation(col.sched.nextIvlStr(c, Ease.HARD)),
         )
     }
 
@@ -623,7 +623,7 @@ open class SchedulerTest : JvmTest() {
         // (* 100 2.5 1.3 SECONDS_PER_DAY)28080000.0
         Assert.assertEquals(28080000, col.sched.nextIvl(c, Ease.EASY))
         MatcherAssert.assertThat(
-            AnkiAssert.without_unicode_isolation(
+            withoutUnicodeIsolation(
                 col.sched.nextIvlStr(
                     c,
                     Ease.EASY,
@@ -766,7 +766,7 @@ open class SchedulerTest : JvmTest() {
 
         // answer 'good'
         col.sched.answerCard(c, Ease.GOOD)
-        AnkiAssert.checkRevIvl(c, 90)
+        checkRevIvl(c, 90)
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
         Assert.assertEquals(0, c.oDue)
         // should not be in learning
@@ -851,7 +851,7 @@ open class SchedulerTest : JvmTest() {
         col.addNote(note2)
         // cram deck
         val did = addDynamicDeck("Cram")
-        val cram = col.decks.get(did)!!
+        val cram = col.decks.getLegacy(did)!!
         cram.put("resched", false)
         col.decks.save(cram)
         col.sched.rebuildDyn(did)
@@ -1331,7 +1331,7 @@ open class SchedulerTest : JvmTest() {
         val sched = col.sched
         addBasicNote("foo", "bar")
         val did = addDynamicDeck("test")
-        val deck = decks.get(did)!!
+        val deck = decks.getLegacy(did)!!
         deck.put("resched", false)
         sched.rebuildDyn(did)
         var card: Card?
@@ -1344,6 +1344,11 @@ open class SchedulerTest : JvmTest() {
         card = sched.card
         Assert.assertEquals(1, sched.counts().lrn.toLong())
         sched.answerCard(card!!, Ease.AGAIN)
-        AnkiAssert.assertDoesNotThrow { col.undo() }
+        assertDoesNotThrow { col.undo() }
     }
+
+    private fun checkRevIvl(
+        c: Card,
+        targetIvl: Int,
+    ): Boolean = c.ivl == targetIvl
 }

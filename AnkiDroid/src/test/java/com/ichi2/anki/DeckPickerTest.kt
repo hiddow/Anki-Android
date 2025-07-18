@@ -28,6 +28,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Storage
 import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.testutils.BackendEmulatingOpenConflict
@@ -35,6 +36,8 @@ import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.addBasicNoteWithOp
+import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.utils.ResourceLoader
@@ -466,7 +469,7 @@ class DeckPickerTest : RobolectricTest() {
                 val didDynamicA = addDynamicDeck("Deck Dynamic 1")
 
                 val noteEditor = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.ADD_CARD, didA)
-                assertEquals("com.ichi2.anki.SingleFragmentActivity", noteEditor.component!!.className)
+                assertEquals("com.ichi2.anki.NoteEditorActivity", noteEditor.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
 
                 val browser = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.BROWSE_CARDS, didA)
@@ -483,12 +486,7 @@ class DeckPickerTest : RobolectricTest() {
                 assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
 
-                targetContext.sharedPrefs().edit(commit = true) {
-                    putBoolean(
-                        targetContext.getString(R.string.pref_new_notifications),
-                        true,
-                    )
-                }
+                Prefs.newReviewRemindersEnabled = true
                 val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
                 assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
