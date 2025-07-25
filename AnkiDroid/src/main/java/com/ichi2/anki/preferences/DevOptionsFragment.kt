@@ -31,7 +31,6 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.show
@@ -166,7 +165,7 @@ class DevOptionsFragment : SettingsFragment() {
          * with a "Review reminders" button, so we need to immediately reload the settings activity
          * to make this change show up.
          */
-        requirePreference<Preference>(R.string.pref_new_notifications).setOnPreferenceChangeListener { _, _ ->
+        requirePreference<Preference>(R.string.pref_new_review_reminders).setOnPreferenceChangeListener { _, _ ->
             ActivityCompat.recreate(requireActivity())
             true
         }
@@ -196,7 +195,7 @@ class DevOptionsFragment : SettingsFragment() {
                     withCol {
                         val deck = decks.addNormalDeckWithName(deckName(i))
                         addNote(
-                            newNote().apply { setField(0, "$i") },
+                            newNote(notetypes.current()).apply { setField(0, "$i") },
                             deck.id,
                         )
                     }

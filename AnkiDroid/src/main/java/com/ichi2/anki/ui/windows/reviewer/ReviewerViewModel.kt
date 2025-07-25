@@ -72,7 +72,6 @@ import timber.log.Timber
 
 class ReviewerViewModel(
     cardMediaPlayer: CardMediaPlayer,
-    serverPort: Int = 0,
 ) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber,
     BindingProcessor<ReviewerBinding, ViewerAction> {
@@ -102,7 +101,7 @@ class ReviewerViewModel(
     val answerTimerStatusFlow = MutableStateFlow<AnswerTimerStatus?>(null)
     val answerFeedbackFlow = MutableSharedFlow<Ease>()
 
-    override val server: AnkiServer = AnkiServer(this, serverPort).also { it.start() }
+    override val server: AnkiServer = AnkiServer(this, StudyScreenRepository.getServerPort()).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     val statesMutationEval = MutableSharedFlow<String>()
     var typedAnswer = ""
@@ -256,7 +255,7 @@ class ReviewerViewModel(
         val cardId = currentCard.await().id
         val noteCount =
             undoableOp {
-                removeNotes(cids = listOf(cardId))
+                removeNotes(cardIds = listOf(cardId))
             }.count
         actionFeedbackFlow.emit(CollectionManager.TR.browsingCardsDeleted(noteCount))
         updateCurrentCard()
@@ -418,7 +417,7 @@ class ReviewerViewModel(
                     .mergeCurrent(
                         state.states.current
                             .toBuilder()
-                            .setCustomData(state.topCard.toBackendCard().customData)
+                            .setCustomData(state.topCard.customData)
                             .build(),
                     ).build(),
             ).build()
@@ -711,13 +710,10 @@ class ReviewerViewModel(
     }
 
     companion object {
-        fun factory(
-            soundPlayer: CardMediaPlayer,
-            serverPort: Int,
-        ): ViewModelProvider.Factory =
+        fun factory(soundPlayer: CardMediaPlayer): ViewModelProvider.Factory =
             viewModelFactory {
                 initializer {
-                    ReviewerViewModel(soundPlayer, serverPort)
+                    ReviewerViewModel(soundPlayer)
                 }
             }
     }

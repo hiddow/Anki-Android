@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">തുറക്കുക ഡ്രോയർ</string>
     <string name="drawer_close">ഡ്രോയർ അടയ്‌ക്കുക</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">കാർഡ് ഡെക്ക്:</string>
     <string name="CardEditorNoteDeck">ഡെക്ക്:</string>
     <string name="CardEditorModel">തരം:</string>
@@ -107,6 +108,11 @@
     <string name="confirm_map_cards_to_nothing">ഒന്നുമില്ലാതെ മാപ്പുചെയ്ത ഏത് കാർഡുകളും ഇല്ലാതാക്കപ്പെടും. ഒരു കുറിപ്പിന് ശേഷിക്കുന്ന കാർഡുകളില്ലെങ്കിൽ, അത് നഷ്‌ടപ്പെടും. തുടരണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
     <string name="missing_note_type">നോട്ട് തരങ്ങളൊന്നും കണ്ടെത്തിയില്ല</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ടൈംബോക്സ് എത്തി</string>
     <plurals name="timebox_reached">
@@ -322,6 +328,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">കൂടുതൽ ഡെക്കുകൾ ഡൗൺലോഡ് ചെയ്യാൻ ലോഗിൻ ചെയ്യുക</string>
     <string name="deck_description_field_hint">വിവരണം</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">പകർത്തുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="card_browser_unavailable_when_notes_mode">\'കുറിപ്പുകൾ\' മോഡിൽ ലഭ്യമല്ല</string>
     <plurals name="unbury_cards_feedback">

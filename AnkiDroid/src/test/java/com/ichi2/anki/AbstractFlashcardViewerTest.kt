@@ -18,21 +18,21 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
 import com.ichi2.anki.AbstractFlashcardViewer.Signal
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
-import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller
+import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.libanki.sched.Ease
+import com.ichi2.anki.libanki.testutils.ext.addNote
+import com.ichi2.anki.libanki.testutils.ext.createBasicTypingNoteType
+import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
-import com.ichi2.testutils.ext.addNote
-import com.ichi2.utils.createBasicTypingNoteType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -41,6 +41,7 @@ import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -56,6 +57,8 @@ import java.util.stream.Stream
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Ease? = null
         private var lastTime = 0
@@ -211,8 +214,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             val animation = gesture.toAnimationTransition().invert()
             val bundle =
                 bundleOf(
-                    NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
-                    NoteEditor.EXTRA_CARD_ID to viewer.currentCard!!.id,
+                    NoteEditorFragment.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
+                    NoteEditorFragment.EXTRA_CARD_ID to viewer.currentCard!!.id,
                     FINISH_ANIMATION_EXTRA to animation as Parcelable,
                 )
             val noteEditor = NoteEditorTest().openNoteEditorWithArgs(bundle)

@@ -23,21 +23,20 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.utils.title
-import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.Storage
 import com.ichi2.anki.libanki.sched.Ease
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
-import com.ichi2.testutils.DbUtils
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.addBasicNoteWithOp
+import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
-import com.ichi2.utils.ResourceLoader
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.containsString
@@ -61,7 +60,6 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
-import java.io.File
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -466,7 +464,7 @@ class DeckPickerTest : RobolectricTest() {
                 val didDynamicA = addDynamicDeck("Deck Dynamic 1")
 
                 val noteEditor = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.ADD_CARD, didA)
-                assertEquals("com.ichi2.anki.SingleFragmentActivity", noteEditor.component!!.className)
+                assertEquals("com.ichi2.anki.NoteEditorActivity", noteEditor.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
 
                 val browser = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.BROWSE_CARDS, didA)
@@ -483,12 +481,7 @@ class DeckPickerTest : RobolectricTest() {
                 assertEquals("com.ichi2.anki.FilteredDeckOptions", deckOptionsDynamic.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
 
-                targetContext.sharedPrefs().edit(commit = true) {
-                    putBoolean(
-                        targetContext.getString(R.string.pref_new_notifications),
-                        true,
-                    )
-                }
+                Prefs.newReviewRemindersEnabled = true
                 val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
                 assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
                 onBackPressedDispatcher.onBackPressed()
@@ -568,99 +561,6 @@ class DeckPickerTest : RobolectricTest() {
         cardIds: List<Long>,
         deckId: DeckId,
     ): Boolean = cardIds.all { col.getCard(it).did == deckId }
-
-    @Test
-    @RunInBackground
-    @Flaky(OS.WINDOWS)
-    fun version16CollectionOpens() {
-        try {
-            setupColV16()
-            InitialActivityWithConflictTest.setupForValid(targetContext)
-            val deckPicker: DeckPicker =
-                super.startActivityNormallyOpenCollectionWithIntent(
-                    DeckPickerEx::class.java,
-                    Intent(),
-                )
-            waitForAsyncTasksToComplete()
-            assertThat(
-                "Collection should now be open",
-                CollectionManager.isOpenUnsafe(),
-            )
-            assertThat(
-                CollectionType.SCHEMA_V_16.isCollection(
-                    col,
-                ),
-                equalTo(true),
-            )
-            assertThat(
-                "Decks should be visible",
-                deckPicker.visibleDeckCount,
-                equalTo(1),
-            )
-        } finally {
-            InitialActivityWithConflictTest.setupForDefault()
-        }
-    }
-
-    @Ignore("needs refactoring")
-    @Test
-    fun corruptVersion16CollectionShowsDatabaseError() {
-        try {
-            setupColV16()
-
-            // corrupt col
-            DbUtils.performQuery(targetContext, "drop table decks")
-            InitialActivityWithConflictTest.setupForValid(targetContext)
-            val deckPicker =
-                super.startActivityNormallyOpenCollectionWithIntent(
-                    DeckPickerEx::class.java,
-                    Intent(),
-                )
-            waitForAsyncTasksToComplete()
-            assertThat(
-                "Collection should not be open",
-                !CollectionManager.isOpenUnsafe(),
-            )
-            assertThat(
-                "An error dialog should be displayed",
-                deckPicker.databaseErrorDialog,
-                equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED),
-            )
-        } finally {
-            InitialActivityWithConflictTest.setupForDefault()
-        }
-    }
-
-    @Test
-    fun futureSchemaShowsError() {
-        try {
-            setupColV250()
-            InitialActivityWithConflictTest.setupForValid(targetContext)
-            val deckPicker =
-                super.startActivityNormallyOpenCollectionWithIntent(
-                    DeckPickerEx::class.java,
-                    Intent(),
-                )
-            waitForAsyncTasksToComplete()
-            assertThat(
-                "Collection should not be open",
-                !CollectionManager.isOpenUnsafe(),
-            )
-            assertThat(
-                "An error dialog should be displayed",
-                deckPicker.databaseErrorDialog,
-                equalTo(DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION),
-            )
-            assertThat(
-                CollectionHelper.getDatabaseVersion(targetContext),
-                equalTo(250),
-            )
-        } catch (e: UnknownDatabaseVersionException) {
-            assertThat("no exception should be thrown", false, equalTo(true))
-        } finally {
-            InitialActivityWithConflictTest.setupForDefault()
-        }
-    }
 
     @Test
     fun checkDisplayOfStudyOptionsOnTablet() {
@@ -790,36 +690,6 @@ class DeckPickerTest : RobolectricTest() {
             function(deckPicker)
         }
 
-    private fun useCollection(collectionType: CollectionType) {
-        // load asset into temp
-        val path = ResourceLoader.getTempCollection(targetContext, collectionType.assetFile)
-        val p = File(path)
-        assertThat(p.isFile, equalTo(true))
-        val collectionDirectory = p.parent
-
-        // set collection path
-        targetContext.sharedPrefs().edit {
-            putString(CollectionHelper.PREF_COLLECTION_PATH, collectionDirectory)
-        }
-
-        // ensure collection not loaded yet
-        assertThat(
-            "collection should not be loaded",
-            CollectionManager.isOpenUnsafe(),
-            equalTo(false),
-        )
-    }
-
-    private fun setupColV16() {
-        Storage.setUseInMemory(false)
-        useCollection(CollectionType.SCHEMA_V_16)
-    }
-
-    private fun setupColV250() {
-        Storage.setUseInMemory(false)
-        useCollection(CollectionType.SCHEMA_V_250)
-    }
-
     enum class CollectionType(
         val assetFile: String,
         private val deckName: String,
@@ -834,7 +704,7 @@ class DeckPickerTest : RobolectricTest() {
         fun isCollection(col: com.ichi2.anki.libanki.Collection): Boolean = col.decks.byName(deckName) != null
     }
 
-    private class DeckPickerEx : DeckPicker() {
+    internal class DeckPickerEx : DeckPicker() {
         var databaseErrorDialog: DatabaseErrorDialogType? = null
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null

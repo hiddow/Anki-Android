@@ -21,7 +21,6 @@ import android.hardware.SensorManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.style.RelativeSizeSpan
 import android.text.style.UnderlineSpan
 import android.view.KeyEvent
 import android.view.Menu
@@ -34,7 +33,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageButton
@@ -44,8 +42,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import androidx.core.text.buildSpannedString
-import androidx.core.text.inSpans
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -120,8 +116,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.IllegalArgumentException
-import java.net.BindException
-import java.net.ServerSocket
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -131,7 +125,7 @@ class ReviewerFragment :
     TagsDialogListener,
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels {
-        ReviewerViewModel.factory(CardMediaPlayer(), getServerPort())
+        ReviewerViewModel.factory(CardMediaPlayer())
     }
 
     override val webView: WebView get() = requireView().findViewById(R.id.webview)
@@ -394,56 +388,36 @@ class ReviewerFragment :
     }
 
     private fun setupAnswerButtons(view: View) {
-        val prefs = sharedPrefs()
         val answerArea = view.findViewById<FrameLayout>(R.id.answer_area)
-        if (prefs.getBoolean(getString(R.string.hide_answer_buttons_key), false)) {
+        if (Prefs.hideAnswerButtons) {
             answerArea.isVisible = false
             return
         }
 
-        fun MaterialButton.setAnswerButtonNextTime(
-            @StringRes title: Int,
-            nextTime: String?,
-        ) {
-            val titleString = context.getString(title)
-            text =
-                if (nextTime != null) {
-                    buildSpannedString {
-                        inSpans(RelativeSizeSpan(0.8F)) {
-                            append(nextTime)
-                        }
-                        append("\n")
-                        append(titleString)
-                    }
-                } else {
-                    titleString
-                }
-        }
-
         val againButton =
-            view.findViewById<MaterialButton>(R.id.again_button).apply {
+            view.findViewById<AnswerButton>(R.id.again_button).apply {
                 setOnClickListener { viewModel.answerCard(Ease.AGAIN) }
             }
         val hardButton =
-            view.findViewById<MaterialButton>(R.id.hard_button).apply {
+            view.findViewById<AnswerButton>(R.id.hard_button).apply {
                 setOnClickListener { viewModel.answerCard(Ease.HARD) }
             }
         val goodButton =
-            view.findViewById<MaterialButton>(R.id.good_button).apply {
+            view.findViewById<AnswerButton>(R.id.good_button).apply {
                 setOnClickListener { viewModel.answerCard(Ease.GOOD) }
             }
         val easyButton =
-            view.findViewById<MaterialButton>(R.id.easy_button).apply {
+            view.findViewById<AnswerButton>(R.id.easy_button).apply {
                 setOnClickListener { viewModel.answerCard(Ease.EASY) }
             }
 
         viewModel.answerButtonsNextTimeFlow
             .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { times ->
-                againButton.setAnswerButtonNextTime(R.string.ease_button_again, times?.again)
-                hardButton.setAnswerButtonNextTime(R.string.ease_button_hard, times?.hard)
-                goodButton.setAnswerButtonNextTime(R.string.ease_button_good, times?.good)
-                easyButton.setAnswerButtonNextTime(R.string.ease_button_easy, times?.easy)
+                againButton.setNextTime(times?.again)
+                hardButton.setNextTime(times?.hard)
+                goodButton.setNextTime(times?.good)
+                easyButton.setNextTime(times?.easy)
             }
 
         val showAnswerButton =
@@ -462,7 +436,7 @@ class ReviewerFragment :
             }
         }
 
-        if (prefs.getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+        if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
             hardButton.isVisible = false
             easyButton.isVisible = false
         }
@@ -663,7 +637,7 @@ class ReviewerFragment :
      * of [Prefs.toolbarPosition] and `Hide answer buttons`
      */
     private fun setupMargins(view: View) {
-        val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        val hideAnswerButtons = Prefs.hideAnswerButtons
         // In big screens, let the menu expand if there are no answer buttons
         if (hideAnswerButtons && !resources.isWindowCompact()) {
             val constraintLayout = view.findViewById<ConstraintLayout>(R.id.tools_layout)
@@ -673,11 +647,14 @@ class ReviewerFragment :
                 connect(
                     R.id.reviewer_menu_view,
                     ConstraintSet.START,
-                    R.id.guideline_counts,
+                    R.id.counts_flow,
                     ConstraintSet.END,
                 )
                 applyTo(constraintLayout)
             }
+            // applying a ConstraintSet resets the visibility of counts_flow,
+            // which includes the timer, so set again its visibility.
+            timer?.isVisible = viewModel.answerTimerStatusFlow.value != null
             return
         }
 
@@ -796,23 +773,5 @@ class ReviewerFragment :
 
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
-
-        fun getServerPort(): Int {
-            if (!Prefs.useFixedPortInReviewer) return 0
-            return try {
-                ServerSocket(Prefs.reviewerPort)
-                    .use {
-                        it.reuseAddress = true
-                        it.localPort
-                    }.also {
-                        if (Prefs.reviewerPort == 0) {
-                            Prefs.reviewerPort = it
-                        }
-                    }
-            } catch (_: BindException) {
-                Timber.w("Fixed port %d under use. Using dynamic port", Prefs.reviewerPort)
-                0
-            }
-        }
     }
 }
