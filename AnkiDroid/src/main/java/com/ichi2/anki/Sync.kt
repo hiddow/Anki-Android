@@ -31,7 +31,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
-import com.ichi2.anki.libanki.createBackup
 import com.ichi2.anki.libanki.fullUploadOrDownload
 import com.ichi2.anki.libanki.syncCollection
 import com.ichi2.anki.libanki.syncLogin
@@ -239,7 +238,7 @@ private suspend fun handleNormalSync(
             }
         }
 
-    if (output.hasNewEndpoint()) {
+    if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
         Timber.i("sync endpoint updated")
         deckPicker.sharedPrefs().edit {
             putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)

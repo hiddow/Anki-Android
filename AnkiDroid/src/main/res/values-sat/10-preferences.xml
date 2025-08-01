@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱢᱟᱯ</string>
     <string name="card_browser_font_size" maxLength="41">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱪᱤᱠᱤ ᱢᱟᱯ</string>
     <string name="card_browser_hide_media" maxLength="41">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱨᱮ ᱨᱮᱫᱼᱧᱩᱛᱩᱢ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="card_browser_hide_media_summary">ᱠᱟᱰ ᱵᱨᱟᱣᱡᱚᱨ ᱠᱩᱞᱤ ᱨᱮ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫᱼᱧᱩᱛᱩᱢ ᱫᱮᱠᱷᱟᱣᱢᱮ/ᱛᱮᱞᱟ ᱡᱟᱭᱜᱟ</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid ᱩᱫᱩᱜ ᱯᱩᱛᱷᱤ</string>
     <string name="fullscreen_review" maxLength="41">ᱯᱩᱨᱟᱹᱥᱠᱨᱤᱱ ᱢᱚᱰ</string>
     <string name="full_screen_off">ᱵᱚᱸᱫ</string>
@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ᱛᱟᱞᱟ ᱟᱨ ᱛᱟᱞᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ᱞᱟᱛᱟᱨ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ᱞᱟᱛᱟᱨ ᱡᱟᱡᱚᱢ ᱛᱤ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">ᱥᱤᱠᱷᱱᱟᱹᱛ ᱚᱱᱚᱞ</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ ᱢᱚᱱᱩ</string>
     <string name="card_browser_enable_external_context_menu_summary">ᱠᱚᱱᱴᱮᱠᱥᱴ ᱢᱮᱱᱩ ᱠᱡᱟᱜᱟᱛ ᱨᱮ ‘%s’ ᱦᱩᱭ ᱦᱚᱪᱚ</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">\'ᱠᱞᱚᱡ ᱢᱮᱴᱟᱣ\' ᱠᱚᱱᱴᱮᱠᱥᱴ ᱢᱮᱱᱩ ᱚᱛᱱᱚᱜ ᱧᱮᱸᱞ ᱢᱚᱰ ᱨᱮ ᱵᱟᱛᱟᱣ ᱢᱮ ᱾.</string>
     <string name="vertical_centering" maxLength="41">ᱛᱟᱞᱟ ᱥᱟᱡᱟᱣ</string>
     <string name="vertical_centering_summ">ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱚ ᱛᱟᱞᱟ ᱨᱮ ᱥᱤᱫᱷᱟ ᱛᱮ ᱟᱹᱜᱩᱭᱢᱮ</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ᱵᱟᱨᱫᱷᱟᱣ ᱞᱭᱟᱯ ᱚᱠᱛᱚ ᱤᱱᱴᱟᱹᱨᱵᱷᱟᱞ (ᱢᱤᱞᱤᱥᱮᱠᱮᱰ)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ᱵᱟᱨᱫᱷᱟᱣ ᱞᱭᱟᱯ ᱚᱠᱛᱚ ᱤᱱᱴᱟᱹᱨᱵᱷᱟᱞ</string>
     <string name="pref_double_tap_time_interval_summary">ᱡᱩᱫᱤ ᱱᱤᱛᱚᱜ ᱵᱟᱝ ᱦᱩᱭᱟᱹᱠᱟᱱᱟ ᱮᱱᱠᱷᱟᱱ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱚᱱ ᱨᱮᱭᱟᱜ ᱫᱚᱥᱟᱨ ᱴᱭᱟᱯ ᱵᱟᱝ ᱛᱩᱸᱠᱷᱤᱜ-ᱟ । ᱱᱚᱣᱟ ᱦᱩᱯᱠᱟᱹ ᱰᱚᱵᱚᱞ ᱴᱭᱟᱯ ᱴᱷᱟᱠᱮᱫ ᱚᱪᱚᱭᱟ</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">ᱟᱹᱰᱤ ᱫᱤᱱ ᱞᱟᱦᱟᱛᱮ ᱚᱞ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
@@ -230,6 +233,8 @@
     <string name="navigation" maxLength="41">ᱱᱮᱵᱤᱜᱮᱥᱚᱱ</string>
     <string name="media" maxLength="41">ᱢᱤᱰᱤᱭᱟ</string>
     <string name="misc" maxLength="41">ᱢᱤᱥᱠ</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Select tags</string>
     <!-- Deck configurations -->

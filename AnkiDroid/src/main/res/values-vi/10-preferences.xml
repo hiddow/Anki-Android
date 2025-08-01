@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">Kích thước nút trả lời</string>
     <string name="card_browser_font_size" maxLength="41">Thẻ trình duyệt font rộng</string>
     <string name="card_browser_hide_media" maxLength="41">Hiển thị tên tệp trong trình duyệt thẻ</string>
-    <string name="card_browser_hide_media_summary">Hiển thị tên tệp phương tiện trong các trường câu hỏi / câu trả lời của trình duyệt thẻ</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Thư mục AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Chế độ toàn màn hình</string>
     <string name="full_screen_off">Tắt</string>
@@ -115,6 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Chạm vào chính giữa</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Chạm vào dưới cùng bên trái</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Chạm vào dưới cùng bên phải</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Lắc thiết bị</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>
@@ -160,7 +163,7 @@
     <string name="disable_extended_text_ui_summ">Cho phép menu ngữ cảnh \'Đánh dấu Cloze\' khi ở chế độ ngang.</string>
     <string name="vertical_centering" maxLength="41">Chọn Center align</string>
     <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Hiển thị thời gian nhấn và giữ câu trả lời</string>
     <string name="pref_show_answer_long_press_time_summary">Thời gian nhấn tối thiểu trước khi nút hiển thị câu trả lời đăng ký một thao tác chạm.</string>
@@ -227,6 +230,8 @@
     <string name="navigation" maxLength="41">Điều hướng</string>
     <string name="media" maxLength="41">Đa phương tiện</string>
     <string name="misc" maxLength="41">Hỗn hợp</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Chọn thẻ</string>
     <!-- Deck configurations -->
@@ -251,7 +256,7 @@
     <string name="type_in_answer_focus" maxLength="41">Tập trung \'Nhập câu trả lời\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
-    <string name="open_changelog">Mở Changelog</string>
+    <string name="open_changelog">Open changelog</string>
     <string name="pref_cat_about_title" maxLength="41">Giới thiệu</string>
     <string name="contributors_title">Những người đóng góp</string>
     <string name="about_contributors_description"><![CDATA[Đây là <a href=\"%1$s\">cộng tác viên tuyệt vời của chúng tôi</a>. Bạn có thể hỗ trợ AnkiDroid bằng cách lập trình, dịch thuật, quyên góp và <a href=\"%2$s\">hơn thế nữa</a>!]]></string>

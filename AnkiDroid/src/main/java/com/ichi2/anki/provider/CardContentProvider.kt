@@ -30,6 +30,7 @@ import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import androidx.core.net.toUri
+import anki.scheduler.CardAnswer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
@@ -56,8 +57,6 @@ import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.libanki.sched.DeckNode
-import com.ichi2.anki.libanki.sched.Ease
-import com.ichi2.anki.utils.ext.description
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
@@ -196,14 +195,17 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    /** Only enforce permissions for queries and inserts on Android M and above, or if its a 'rogue client'  */
-    private fun shouldEnforceQueryOrInsertSecurity(): Boolean = knownRogueClient()
+    /**
+     * Enforce permissions for queries and inserts on Android M and above.
+     * @see knownRogueClient
+     */
+    private fun shouldEnforceQueryOrInsertSecurity(): Boolean = true
 
-    /** Enforce permissions for all updates on Android M and above. Otherwise block depending on URI and client app  */
-    private fun shouldEnforceUpdateSecurity(uri: Uri): Boolean {
-        val whitelist = listOf(NOTES_ID_CARDS_ORD, NOTE_TYPES_ID, NOTE_TYPES_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED)
-        return !whitelist.contains(sUriMatcher.match(uri)) || knownRogueClient()
-    }
+    /**
+     * Enforce permissions for all updates on Android M and above.
+     * @see knownRogueClient
+     */
+    private fun shouldEnforceUpdateSecurity(uri: Uri): Boolean = true
 
     override fun query(
         uri: Uri,
@@ -356,7 +358,7 @@ class CardContentProvider : ContentProvider() {
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {
-                        buttonTexts.put(col.sched.nextIvlStr(currentCard, Ease.fromValue(i + 1)))
+                        buttonTexts.put(col.sched.nextIvlStr(currentCard, CardAnswer.Rating.forNumber(i)))
                         i++
                     }
                     addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns)
@@ -608,16 +610,21 @@ class CardContentProvider : ContentProvider() {
                 val valueSet = values!!.valueSet()
                 var cardOrd = -1
                 var noteId: NoteId = -1
-                var ease: Ease? = null
+
+                @Suppress("DEPRECATION")
+                var ease: com.ichi2.anki.libanki.sched.Ease? = null
                 var timeTaken: Long = -1
                 var bury = -1
                 var suspend = -1
+                @Suppress("DEPRECATION")
                 for ((key) in valueSet) {
                     when (key) {
                         FlashCardsContract.ReviewInfo.NOTE_ID -> noteId = values.getAsLong(key)
                         FlashCardsContract.ReviewInfo.CARD_ORD -> cardOrd = values.getAsInteger(key)
                         FlashCardsContract.ReviewInfo.EASE ->
-                            ease = Ease.fromValue(values.getAsInteger(key))
+                            ease =
+                                com.ichi2.anki.libanki.sched.Ease
+                                    .fromValue(values.getAsInteger(key))
 
                         FlashCardsContract.ReviewInfo.TIME_TAKEN ->
                             timeTaken =
@@ -682,7 +689,7 @@ class CardContentProvider : ContentProvider() {
         Timber.d(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
-                col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
+                col.removeNotes(noteIds = listOf(uri.pathSegments[1].toLong()))
                 1
             }
             NOTE_TYPES_ID_EMPTY_CARDS -> {
@@ -969,7 +976,7 @@ class CardContentProvider : ContentProvider() {
                 } catch (filteredSubdeck: BackendDeckIsFilteredException) {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
-                val deck: Deck = col.decks.get(did)!!
+                val deck: Deck = col.decks.getLegacy(did)!!
                 @KotlinCleanup("remove the null check if deck is found to be not null in DeckManager.get(Long)")
                 @Suppress("SENSELESS_COMPARISON")
                 if (deck != null) {
@@ -1147,7 +1154,7 @@ class CardContentProvider : ContentProvider() {
     private fun answerCard(
         col: Collection,
         cardToAnswer: Card?,
-        ease: Ease,
+        @Suppress("DEPRECATION") ease: com.ichi2.anki.libanki.sched.Ease,
         timeTaken: Long,
     ) {
         try {
@@ -1155,7 +1162,7 @@ class CardContentProvider : ContentProvider() {
                 if (timeTaken != -1L) {
                     cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
                 }
-                col.sched.answerCard(cardToAnswer, ease)
+                col.sched.answerCard(cardToAnswer, CardAnswer.Rating.forNumber(ease.value - 1))
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "answerCard - RuntimeException on answering card")
@@ -1247,7 +1254,7 @@ class CardContentProvider : ContentProvider() {
         col: Collection,
         did: DeckId,
     ): Boolean =
-        if (col.decks.get(did) != null) {
+        if (col.decks.getLegacy(did) != null) {
             col.decks.select(did)
             true
         } else {
