@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת תפריט</string>
     <string name="drawer_close">סגירת תפריט</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
@@ -109,6 +110,11 @@
     <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
     <string name="missing_note_type">לא נמצא סוג פתק</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (ריק)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
     <plurals name="timebox_reached">
@@ -150,7 +156,7 @@
     <string name="import_error_handle_exception">ייבוא הקובץ נכשל\n\n%s</string>
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
-    <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
+    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
     <string name="import_error_copy_to_cache">לא הצליח לשמור את הקובץ במטמון (ייתכן ששטח האחסון נגמר)</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_ready_title">הייצוא מוכן</string>
@@ -332,6 +338,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">פתיחת הגדרות טקסט-לדיבור נכשלה</string>
     <string name="shared_decks_login_required">אנא התחבר כדי להוריד חפיסות נוספות</string>
     <string name="deck_description_field_hint">תיאור</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">ההעתקה נכשלה</string>
     <string name="card_browser_unavailable_when_notes_mode">לא זמין במצב \'פתקים\'</string>
     <plurals name="unbury_cards_feedback">

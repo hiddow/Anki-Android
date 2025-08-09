@@ -16,6 +16,7 @@
 package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
+import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
@@ -39,7 +40,7 @@ class ReviewerOptionsFragment :
         val hideSystemBars =
             requirePreference<ListPreference>(R.string.hide_system_bars_key).apply {
                 setOnPreferenceChangeListener { value ->
-                    ignoreDisplayCutout.isEnabled = value != HideSystemBars.NONE.entryValue
+                    ignoreDisplayCutout.isEnabled = value != getString(HideSystemBars.NONE.entryResId)
                 }
             }
         val newReviewerPref = requirePreference<SwitchPreferenceCompat>(R.string.new_reviewer_options_key)
@@ -49,7 +50,7 @@ class ReviewerOptionsFragment :
             for (pref in prefs) {
                 if (pref is HtmlHelpPreference) continue
                 if (pref.key == ignoreDisplayCutout.key && newValue) {
-                    ignoreDisplayCutout.isEnabled = hideSystemBars.value != HideSystemBars.NONE.entryValue
+                    ignoreDisplayCutout.isEnabled = hideSystemBars.value != getString(HideSystemBars.NONE.entryResId)
                     continue
                 }
                 pref.isEnabled = newValue
@@ -89,5 +90,8 @@ class ReviewerOptionsFragment :
                 launchCatchingTask { CollectionPreferences.setShowIntervalsOnButtons(newValue) }
             }
         }
+
+        requirePreference<PreferenceCategory>(R.string.addons_category_key).title =
+            CollectionManager.TR.qtMiscAddons()
     }
 }

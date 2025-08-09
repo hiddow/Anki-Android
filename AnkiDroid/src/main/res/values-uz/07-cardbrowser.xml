@@ -83,14 +83,14 @@
         <item>Yaratilgan vaqti boʻyicha</item>
         <item>Qayd oʻzgartirilgan vaqti boʻyicha</item>
         <item>Karta oʻzgartirilgan vaqti boʻyicha</item>
-        <item>Belgilangan vaqti boʻyicha</item>
+        <item>Muddati boʻyicha</item>
         <item>Vaqt oraligʻi boʻyicha</item>
         <item>Osonligi boʻyicha</item>
         <item>Takrorlashlar boʻyicha</item>
         <item>Unitilishlar boʻyicha</item>
         <item>Dasta nomi boʻyicha</item>
     </string-array>
-    <string name="chane_browser_column">Ustunni oʻzgartirish</string>
+    <string name="manage_browser_column">Manage column</string>
     <string name="no_columns_available">Tanlab boʻladigan ustun yoʻq</string>
     <string name="card_browser_select_all" maxLength="28">Barchasini tanlash</string>
     <string name="card_browser_select_none" maxLength="28">Hech qaysini tanlama</string>

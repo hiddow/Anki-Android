@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Fiók megnyitása</string>
     <string name="drawer_close">Fiók bezárása</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kártyapakli:</string>
     <string name="CardEditorNoteDeck">Pakli:</string>
     <string name="CardEditorModel">Típus:</string>
@@ -107,6 +108,11 @@
     <string name="confirm_map_cards_to_nothing">Az összes üres kártyát töröljük. Ha a jegyzet összes kártyája törlődik, akkor ez is eltávolításra kerül. Folytatod?</string>
     <string name="missing_note_type">No note type found</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (üres)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">A rendelkezésre álló időt elhasználtuk</string>
     <plurals name="timebox_reached">
@@ -144,7 +150,7 @@
     <string name="import_error_handle_exception">Nem sikerült importálni a fájlt\n\n%s</string>
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
-    <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
+    <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan Anki fájlokat:\n%s</string>
     <string name="import_error_copy_to_cache">Nem sikerült gyorsítótárba helyezni a fájlt (valószínűleg elfogyott a tárhely)</string>
     <string name="import_interrupted">Importálás megszakítva</string>
     <string name="export_ready_title">Exportálás kész</string>
@@ -323,6 +329,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">A felolvasás beállítások megnyitása sikertelen</string>
     <string name="shared_decks_login_required">Több pakli letöltéséhez jelentkezz be</string>
     <string name="deck_description_field_hint">Megjegyzés</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Másolás sikertelen!</string>
     <string name="card_browser_unavailable_when_notes_mode">Nem elérhető \"Jegyzet\" módban</string>
     <plurals name="unbury_cards_feedback">
