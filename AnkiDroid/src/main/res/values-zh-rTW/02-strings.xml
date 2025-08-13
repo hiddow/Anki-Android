@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">開啟側欄</string>
     <string name="drawer_close">關閉側欄</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">卡片牌組：</string>
     <string name="CardEditorNoteDeck">牌組：</string>
     <string name="CardEditorModel">種類：</string>
@@ -106,6 +107,11 @@
     <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
     <string name="missing_note_type">未找到筆記類型</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">達到計時器限制！</string>
     <plurals name="timebox_reached">
@@ -141,7 +147,7 @@
     <string name="import_error_handle_exception">無法匯入檔案\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
-    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
+    <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 Anki 檔案：\n%s</string>
     <string name="import_error_copy_to_cache">無法快取檔案 (可能是儲存空間不夠)</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_ready_title">已準備好要匯出</string>
@@ -236,7 +242,7 @@
     <string name="note_editor_video_too_large">影片太大，無法貼上，請手動插入</string>
     <string name="note_editor_audio_too_large">此音訊檔太大，無法貼上，請手動插入</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">你可能需要使用 iManager 以允許 Ankidroid 新增捷徑</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">你可能需要使用 iManager 以允許 AnkiDroid 新增捷徑</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主畫面不允許 AnkiDroid 新增捷徑</string>
     <string name="create_shortcut_error">新增捷徑時發生錯誤：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">大寫句子</string>
@@ -251,7 +257,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">下載牌組</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
     <string name="try_again">再試一次</string>
     <string name="cancel_download">取消下載</string>
     <string name="cancel_download_question_title">取消下載？</string>
@@ -317,6 +323,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">請登錄以下載更多卡組</string>
     <string name="deck_description_field_hint">描述</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">複製失敗</string>
     <string name="card_browser_unavailable_when_notes_mode">在「筆記」模式中不可用</string>
     <plurals name="unbury_cards_feedback">

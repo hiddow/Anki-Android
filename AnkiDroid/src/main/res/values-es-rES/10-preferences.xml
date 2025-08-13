@@ -82,7 +82,7 @@
     <string name="button_size" maxLength="41">Tamaño del botón de respuesta</string>
     <string name="card_browser_font_size" maxLength="41">Escalado de fuentes del explorador</string>
     <string name="card_browser_hide_media" maxLength="41">Mostrar nombres de archivo en el navegador de tarjetas</string>
-    <string name="card_browser_hide_media_summary">Mostrar nombres de archivos multimedia en los campos de pregunta/respuesta del navegador de tarjetas</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Carpeta de AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Pantalla completa</string>
     <string name="full_screen_off">Desactivado</string>
@@ -116,6 +116,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar el centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Agitar el dispositivo</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menú ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Habilita globalmente el menú contextual ‘%s</string>
@@ -161,7 +164,7 @@
     <string name="disable_extended_text_ui_summ">Permite el menú contextual \'preguntas anidadas\' cuando está en modo horizontal.</string>
     <string name="vertical_centering" maxLength="41">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Tiempo de pulsación larga para mostrar respuesta</string>
     <string name="pref_show_answer_long_press_time_summary">Tiempo mínimo de pulsación antes de que el botón Mostrar Respuesta registre un toque.</string>
@@ -230,6 +233,8 @@
     <string name="navigation" maxLength="41">Navegación</string>
     <string name="media" maxLength="41">Multimedia</string>
     <string name="misc" maxLength="41">Varios</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
     <!-- Deck configurations -->
@@ -254,7 +259,7 @@
     <string name="type_in_answer_focus" maxLength="41">Enfoque \"escribe la respuesta\"</string>
     <string name="type_in_answer_focus_summ">Enfocar automáticamente el campo \"escribir en respuesta\" en la pantalla de estudio</string>
     <!-- About -->
-    <string name="open_changelog">Abrir el Registro de Cambios</string>
+    <string name="open_changelog">Open changelog</string>
     <string name="pref_cat_about_title" maxLength="41">Acerca de</string>
     <string name="contributors_title">Colaboradores</string>
     <string name="about_contributors_description"><![CDATA[Estos son nuestros increíbles <a href=\"%1$s\">colaboradores</a>. ¡También puedes ayudar a AnkiDroid programando, traduciendo, donando y <a href=\"%2$s\">más</a>!]]></string>

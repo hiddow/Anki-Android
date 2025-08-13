@@ -25,7 +25,6 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.ConflictResolution
-import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_CONNECTION_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_MEDIA_SYNC_ERROR
@@ -38,8 +37,6 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC
-import com.ichi2.anki.joinSyncMessages
-import com.ichi2.anki.showError
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 
 class SyncErrorDialog : AsyncDialogFragment() {
@@ -232,6 +229,24 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 else -> requireArguments().getString(DIALOG_MESSAGE_KEY)
             }
 
+    private fun joinSyncMessages(
+        dialogMessage: String?,
+        syncMessage: String?,
+    ): String? {
+        // If both strings have text, separate them by a new line, otherwise return whichever has text
+        return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
+            """
+            $dialogMessage
+            
+            $syncMessage
+            """.trimIndent()
+        } else if (!dialogMessage.isNullOrEmpty()) {
+            dialogMessage
+        } else {
+            syncMessage
+        }
+    }
+
     /**
      * Get the message which is shown in notification bar when dialog fragment can't be shown
      *
@@ -317,16 +332,9 @@ class SyncErrorDialog : AsyncDialogFragment() {
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // we may be called via any AnkiActivity but media check is a DeckPicker thing
-            if (activity !is DeckPicker) {
-                showError(
-                    activity,
-                    activity.getString(R.string.something_wrong),
-                    ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName),
-                    true,
-                )
-                return
-            }
-            activity.showSyncErrorDialog(dialogType, dialogMessage)
+            activity
+                .requireDeckPickerOrShowError()
+                ?.showSyncErrorDialog(dialogType, dialogMessage)
         }
 
         override fun toMessage(): Message =

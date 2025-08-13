@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">答案按鈕尺寸</string>
     <string name="card_browser_font_size" maxLength="41">卡片瀏覽器字型縮放</string>
     <string name="card_browser_hide_media" maxLength="41">在卡片瀏覽器展示檔案名</string>
-    <string name="card_browser_hide_media_summary">在卡片瀏覽器問題/答案區域展示媒體檔案名</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid 路徑</string>
     <string name="fullscreen_review" maxLength="41">全螢幕模式</string>
     <string name="full_screen_off">關閉</string>
@@ -115,6 +115,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">輕觸正中間</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">輕觸左下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">輕觸右下方</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">搖晃裝置</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ 選單</string>
     <string name="card_browser_enable_external_context_menu_summary">啟用全域性‘%s’內容選單</string>
@@ -160,7 +163,7 @@
     <string name="disable_extended_text_ui_summ">在橫向模式中允許‘克漏字測驗’選單。</string>
     <string name="vertical_centering" maxLength="41">置中</string>
     <string name="vertical_centering_summ">垂直置中卡片內容</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔 (毫秒)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">雙擊的時間間隔</string>
     <string name="pref_double_tap_time_interval_summary">如果時間不到，按二次答案按鍵是無效的，這樣可以避免不小心雙擊按鍵。</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">顯示答案長按時間</string>
     <string name="pref_show_answer_long_press_time_summary">顯示答案按鈕生效前的最短按壓時間</string>
@@ -228,6 +231,8 @@
     <string name="navigation" maxLength="41">瀏覽</string>
     <string name="media" maxLength="41">媒體</string>
     <string name="misc" maxLength="41">雜項</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
     <!-- Deck configurations -->

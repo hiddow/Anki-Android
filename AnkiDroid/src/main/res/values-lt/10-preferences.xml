@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Atsakymo mygtuko dydis</string>
     <string name="card_browser_font_size" maxLength="41">Kortelių naršyklės šrifto dydis</string>
     <string name="card_browser_hide_media" maxLength="41">Rodyti failų pavadinimus kortelių naršyklėje</string>
-    <string name="card_browser_hide_media_summary">Medijos failų pavadinimų rodymas kortelių naršyklės klausimų/atsakymų laukuose</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">„AnkiDroid“ katalogas</string>
     <string name="fullscreen_review" maxLength="41">Viso ekrano režimas</string>
     <string name="full_screen_off">Išjungta</string>
@@ -118,6 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Palieskite vidurio centrą</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Palieskite apatinį kairįjį kampą</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Palieskite apatinį dešinįjį kampą</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Pakratykite prietaisą</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Meniu</string>
     <string name="card_browser_enable_external_context_menu_summary">Visuotinai įjungiamas kontekstinis meniu \'%s\'</string>
@@ -164,7 +167,7 @@
     <string name="disable_extended_text_ui_summ">Leidžia naudoti kontekstinį meniu \"Cloze Deletion\", kai naudojamas kraštovaizdžio režimas.</string>
     <string name="vertical_centering" maxLength="41">Centrinis lygiavimas</string>
     <string name="vertical_centering_summ">Kortelių turinį vertikaliai išdėstyti centre</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Dvigubo bakstelėjimo laiko intervalas (milisekundės)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dvigubo bakstelėjimo laiko intervalas</string>
     <string name="pref_double_tap_time_interval_summary">Antrasis atsakymų mygtukų bakstelėjimas bus ignoruojamas, jei šis laikas dar nepraėjo. Taip išvengiama atsitiktinių dvigubų bakstelėjimų</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Rodyti atsakymo ilgą paspaudimo laiką</string>
     <string name="pref_show_answer_long_press_time_summary">Minimalus paspaudimo laikas, per kurį rodomas atsakymo mygtukas fiksuoja prisilietimą.</string>
@@ -235,6 +238,8 @@
     <string name="navigation" maxLength="41">Navigacija</string>
     <string name="media" maxLength="41">Medija</string>
     <string name="misc" maxLength="41">Įvairūs</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Pasirinkite žymes</string>
     <!-- Deck configurations -->
