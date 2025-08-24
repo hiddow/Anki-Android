@@ -84,7 +84,7 @@
     <string name="button_size" maxLength="41">Масштаб кнопок ответа</string>
     <string name="card_browser_font_size" maxLength="41">Масштаб шрифта в списке карточек</string>
     <string name="card_browser_hide_media" maxLength="41">Показывать имена файлов</string>
-    <string name="card_browser_hide_media_summary">Показывает имена медиафайлов в полях вопросов и ответов в списке карточек</string>
+    <string name="card_browser_hide_media_summary">Display audio filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">Папка AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Полноэкранный режим</string>
     <string name="full_screen_off">Выкл.</string>
@@ -118,6 +118,9 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
+    <string name="gestures_two_finger_tap" maxLength="41">Two-finger tap</string>
+    <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
+    <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Потрясти устройство</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Пункт «%s» в меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
@@ -163,7 +166,7 @@
     <string name="disable_extended_text_ui_summ">Включает контекстное меню «Задание с пропусками» в альбомном режиме</string>
     <string name="vertical_centering" maxLength="41">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия (в мс)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия</string>
     <string name="pref_double_tap_time_interval_summary">Второе нажатие на ответ будет проигнорировано, если это время не истекло. Предотвращает случайное двойное нажатие</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Время длительного нажатия для ответа</string>
     <string name="pref_show_answer_long_press_time_summary">Минимальное время нажатия перед тем как кнопка \"показать\" регистрирует касание</string>
@@ -233,6 +236,8 @@
     <string name="navigation" maxLength="41">Навигация</string>
     <string name="media" maxLength="41">Медиа</string>
     <string name="misc" maxLength="41">Разное</string>
+    <!-- Review reminders -->
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
     <!-- Deck configurations -->
@@ -371,7 +376,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Панель навигации</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Все</string>
     <string name="ignore_display_cutout" maxLength="41">Игнорировать вырез экрана</string>
-    <string name="hide_answer_buttons" maxLength="41">Скрывать кнопки ответа</string>
+    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Скрывать кнопки «Трудно» и «Легко»</string>
     <string name="reviewer_frame_style" maxLength="41">Стиль рамки</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Карточка</string>
@@ -385,6 +390,7 @@
     <string name="new_study_screen" maxLength="41">New study screen</string>
     <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="screen" maxLength="41">Screen</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Открыть настройки</string>
 </resources>
