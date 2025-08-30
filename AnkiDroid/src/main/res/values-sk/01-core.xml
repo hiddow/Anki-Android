@@ -65,10 +65,10 @@
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Začnite pridávať kartičky\npomocou ikony +</string>
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
-        <item quantity="one">%d minute left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Ostáva %d minúta</item>
+        <item quantity="few">Ostávajú %d minúty</item>
+        <item quantity="many">Ostáva %d minút</item>
+        <item quantity="other">Ostáva %d minút</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
         <item quantity="one">%1$d hour %2$d left</item>
@@ -89,6 +89,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Ťažké</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Dobré</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Ľahké</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Späť</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Obnoviť</string>
@@ -128,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Pre pokračovanie, prosím, poskytnite Ankidroid povolenie na ukladanie dát</string>
+    <string name="startup_no_storage_permission">Pre pokračovanie, prosím, poskytnite AnkiDroid povolenie na ukladanie dát</string>
     <string name="rebuild_filtered_deck">Obnovujem filtrovaný balíček&#8230;</string>
     <string name="rebuild_cram_label" maxLength="28">Znovu zostaviť</string>
     <string name="empty_cram_label" maxLength="28">Vyprázdniť</string>
@@ -189,7 +190,7 @@
     <string name="sync_conflict_message_new">Kolekcie sa nedajú skombinovať.\nKtorú kolekciu chcete ponechať?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Nahradiť vašu kolekciu AnkiDroid kolekciou z Ankiweb?</string>
+    <string name="sync_conflict_remote_confirm_new">Nahradiť vašu kolekciu AnkiDroid kolekciou z AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Nahradiť vašu kolekciu AnkiWeb kolekciou z AnkiDroid?</string>
     <string name="sync_conflict_title_new">Vyberte kolekciu, ktorú chcete ponechať</string>
     <string name="sync_conflict_replace_title">Nahradiť kolekciu</string>

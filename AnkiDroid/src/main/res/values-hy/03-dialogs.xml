@@ -124,6 +124,8 @@
     <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid-ը թարմացվել է</string>
     <string name="integrity_check_startup_content">Այս թարմացումը ունի շտեմարանի հնարավոր խնդիրների շտկումներ, և մենք խորհուրդ ենք տալիս գործարկել բազայի ստուգումը։</string>
@@ -164,7 +166,7 @@
     <string name="help_item_anki_manual">Anki-ի ձեռնարկ</string>
     <string name="help_item_ankidroid_faq">Հաճախ տրվող հարցեր</string>
     <string name="help_title_get_help">Ստանալ օգնություն</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">Mailing list</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Հայտնել խնդրի մասին</string>
     <string name="help_title_support_ankidroid" maxLength="28">Աջակցել AnkiDroid-ին</string>

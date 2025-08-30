@@ -28,15 +28,15 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 @JvmInline
 @Serializable
+@Parcelize
 value class ReviewReminderId(
     val id: Int,
-) {
+) : Parcelable {
     companion object {
         /**
          * Get and return the next free reminder ID which can be associated with a new review reminder.
@@ -46,7 +46,7 @@ value class ReviewReminderId(
         fun getAndIncrementNextFreeReminderId(): ReviewReminderId {
             val nextFreeId = Prefs.reviewReminderNextFreeId
             Prefs.reviewReminderNextFreeId = nextFreeId + 1
-            Timber.d("Generated next free review reminder ID: $nextFreeId")
+            Timber.d("Generated next free review reminder ID: %s", nextFreeId)
             return ReviewReminderId(nextFreeId)
         }
     }
@@ -56,10 +56,11 @@ value class ReviewReminderId(
  * The time of day at which reminders will send a notification.
  */
 @Serializable
+@Parcelize
 data class ReviewReminderTime(
     val hour: Int,
     val minute: Int,
-) {
+) : Parcelable {
     init {
         require(hour in 0..23) { "Hour must be between 0 and 23" }
         require(minute in 0..59) { "Minute must be between 0 and 59" }
@@ -78,56 +79,14 @@ data class ReviewReminderTime(
 }
 
 /**
- * Types of snooze behaviour that can be present on notifications sent by review reminders.
- * If a reminder is snoozed repeatedly until it overlaps with another notification from the reminder firing the next day,
- * the snoozing instance of the reminder from the previous day will be cancelled.
- */
-@Serializable
-sealed class ReviewReminderSnoozeAmount {
-    /**
-     * The snooze button will never appear on notifications set by this review reminder.
-     */
-    @Serializable
-    data object Disabled : ReviewReminderSnoozeAmount()
-
-    /**
-     * The snooze button will always be available on notifications sent by this review reminder.
-     */
-    @Serializable
-    data class Infinite(
-        val interval: Duration,
-    ) : ReviewReminderSnoozeAmount() {
-        init {
-            require(interval >= 1.minutes) { "Snooze time interval must be >= 1 minute" }
-            require(interval < 24.hours) { "Snooze time interval must be < 24 hours" }
-        }
-    }
-
-    /**
-     * The snooze button can be pressed a maximum amount of times on notifications sent by this review reminder.
-     * After it has been pressed that many times, the button will no longer appear.
-     */
-    @Serializable
-    data class SetAmount(
-        val interval: Duration,
-        val maxSnoozes: Int,
-    ) : ReviewReminderSnoozeAmount() {
-        init {
-            require(interval >= 1.minutes) { "Snooze time interval must be >= 1 minute" }
-            require(interval < 24.hours) { "Snooze time interval must be < 24 hours" }
-            require(maxSnoozes >= 1) { "Max snoozes must be >= 1" }
-        }
-    }
-}
-
-/**
  * If, at the time of the reminder, less than this many cards are due, the notification is not triggered.
  */
 @JvmInline
 @Serializable
+@Parcelize
 value class ReviewReminderCardTriggerThreshold(
     val threshold: Int,
-) {
+) : Parcelable {
     init {
         require(threshold >= 0) { "Card trigger threshold must be >= 0" }
     }
@@ -166,7 +125,13 @@ sealed class ReviewReminderScope : Parcelable {
          * Caches the resultant deck name to minimize calls to the collection.
          * Should not be called if [did] is no longer a valid deck ID. If [did] is invalid, this method will return "[no deck]".
          */
-        suspend fun getDeckName(): String = cachedDeckName ?: withCol { decks.name(did) }.also { cachedDeckName = it }
+        suspend fun getDeckName(): String {
+            cachedDeckName?.let { return it }
+            val retrievedDeckName = withCol { decks.name(did) }
+            Timber.d("Retrieved deck name for review reminder: %s", retrievedDeckName)
+            cachedDeckName = retrievedDeckName
+            return retrievedDeckName
+        }
     }
 }
 
@@ -186,34 +151,36 @@ sealed class ReviewReminderScope : Parcelable {
  * stored review reminders on user devices will no longer be able to be read, as decoding them to the new
  * [ReviewReminder] schema will cause a serialization exception.
  * You must specify a schema migration mapping for users who already have review reminders set on their devices
- * so that [ReviewRemindersDatabase.attemptSchemaMigration] can migrate their reminders to the new schema.
- * Use an [OldReviewReminderSchema] to store the old schema and to define a method for migrating to the new schema.
- * Your method will be called from [ScheduleReminders.catchDatabaseExceptions]. To inform [ScheduleReminders.catchDatabaseExceptions]
- * that some users may have review reminders in the form of your old schema, add your [OldReviewReminderSchema]
- * to [ScheduleReminders.oldReviewReminderSchemasForMigration]. We store a list of old schemas since there may be
- * multiple old schemas, and users do not always update their app from
- * version A -> B -> C but may sometimes jump from A -> C.
- * [ScheduleReminders.catchDatabaseExceptions] will attempt to migrate from all old schemas present in the list.
+ * so that [ReviewRemindersDatabase.performSchemaMigration] can migrate their reminders to the new schema.
+ * Use a [ReviewReminderSchema] to store the old schema and to define a method for migrating to the new schema.
+ * Your method will be called from [ReviewRemindersDatabase.performSchemaMigration]. To inform [ReviewRemindersDatabase.performSchemaMigration]
+ * that some users may have review reminders in the form of your old schema, add your [ReviewReminderSchema]
+ * to [ReviewRemindersDatabase.oldReviewReminderSchemasForMigration] and update [ReviewRemindersDatabase.schemaVersion].
+ * [ReviewRemindersDatabase.oldReviewReminderSchemasForMigration] should contain a chain of versions, from 1 -> 2 -> 3 -> ...,
+ * and when a migration begins, it will happen step by step via the [ReviewReminderSchema.migrate] method, going from version 1 to version 2,
+ * from version 2 to version 3, and so on, until [ReviewRemindersDatabase.schemaVersion] is reached.
+ * Preferably, also add some unit tests to ensure your migration works properly on all user devices once your update is rolled out.
+ * See ReviewRemindersDatabaseTest for examples on how to do this.
  *
  * TODO: add remaining fields planned for GSoC 2025.
  *
  * @param id Unique, auto-incremented ID of the review reminder.
  * @param time See [ReviewReminderTime].
- * @param snoozeAmount See [ReviewReminderSnoozeAmount].
  * @param cardTriggerThreshold See [ReviewReminderCardTriggerThreshold].
  * @param scope See [ReviewReminderScope].
  * @param enabled Whether the review reminder's notifications are active or disabled.
  */
 @Serializable
+@Parcelize
 @ConsistentCopyVisibility
 data class ReviewReminder private constructor(
-    val id: ReviewReminderId,
+    override val id: ReviewReminderId,
     val time: ReviewReminderTime,
-    val snoozeAmount: ReviewReminderSnoozeAmount,
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
     val scope: ReviewReminderScope,
     var enabled: Boolean,
-) {
+) : Parcelable,
+    ReviewReminderSchema {
     companion object {
         /**
          * Create a new review reminder. This will allocate a new ID for the reminder.
@@ -222,17 +189,20 @@ data class ReviewReminder private constructor(
          */
         fun createReviewReminder(
             time: ReviewReminderTime,
-            snoozeAmount: ReviewReminderSnoozeAmount,
             cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
             scope: ReviewReminderScope = ReviewReminderScope.Global,
             enabled: Boolean = true,
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
-            snoozeAmount,
             cardTriggerThreshold,
             scope,
             enabled,
         )
     }
+
+    /**
+     * This is the up-to-date schema, we cannot migrate to a newer version.
+     */
+    override fun migrate(): ReviewReminder = this
 }

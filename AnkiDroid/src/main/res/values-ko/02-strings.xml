@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">카드 덱:</string>
     <string name="CardEditorNoteDeck">덱 :</string>
     <string name="CardEditorModel">유형:</string>
@@ -83,6 +84,7 @@
     <string name="webview_crash_loop_dialog_title">WebView 렌더링이 실패했습니다.</string>
     <string name="webview_crash_loop_dialog_content">WebView가 \'%1$s\' 카드를 렌더링하지 못했습니다.
 %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">플래그</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -107,6 +109,11 @@
     <string name="confirm_map_cards_to_nothing">연결되지 않은 모든 카드는 삭제됩니다. 만약 노트에 남아있는 카드가 없다면 버려질 것입니다. 계속 진행할까요?</string>
     <string name="missing_note_type">노트 유형이 없습니다.</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">시간 상자에 도달했습니다</string>
     <plurals name="timebox_reached">
@@ -142,7 +149,7 @@
     <string name="import_error_handle_exception">패키지를 가져오는데 실패했습니다.\n\n%s</string>
     <string name="import_error_not_apkg_extension">apkg, colpkg 확장자를 가진 \"%s\" 파일이 없습니다.</string>
     <string name="import_error_load_imported_database">Anki 데이터베이스 (.anki2)의 덮어쓰기는 아직 지원되지 않습니다. 덮어쓰려면 설명서를 참조해주십시오.</string>
-    <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
+    <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. Anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
     <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
     <string name="export_ready_title">내보내기 준비 완료</string>
@@ -174,10 +181,6 @@ Context | Request Context    [1]</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
     <!-- Time spans -->
-    <string name="reminder_title">오늘의 학습 잊지 마세요!</string>
-    <plurals name="reminder_text">
-        <item quantity="other">%1$s에서 복습할 카드 %2$d장</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->
@@ -320,6 +323,9 @@ Context | Request Context    [1]</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">TTS 설정 열기 실패</string>
     <string name="shared_decks_login_required">카드 덱을 더 다운로드하려면 로그인해 주세요</string>
     <string name="deck_description_field_hint">설명</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">복사 실패</string>
     <string name="card_browser_unavailable_when_notes_mode">\'메모\' 모드에서는 사용할 수 없습니다</string>
     <plurals name="unbury_cards_feedback">

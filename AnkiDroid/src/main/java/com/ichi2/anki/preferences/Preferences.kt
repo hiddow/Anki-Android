@@ -43,6 +43,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleReminders
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.isWindowCompact
@@ -101,6 +102,12 @@ class PreferencesFragment :
     ): Boolean {
         val className = pref.fragment ?: return false
         val fragmentClass = FragmentFactory.loadFragmentClass(requireActivity().classLoader, className)
+
+        // #18963: Remove any subscreens after opening a new primary screen
+        if (settingsIsSplit && caller is HeaderFragment) {
+            childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+
         childFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.settings_container, fragmentClass, null)
@@ -115,7 +122,7 @@ class PreferencesFragment :
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         if (result.key == getString(R.string.pref_review_reminders_screen_key)) {
             Timber.i("Preferences:: edit review reminders button pressed")
-            val intent = ScheduleReminders.getIntent(requireContext(), true)
+            val intent = ScheduleReminders.getIntent(requireContext(), ReviewReminderScope.Global)
             startActivity(intent)
             return
         }
@@ -276,6 +283,7 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_advanced -> AdvancedSettingsFragment()
         R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
         R.xml.preferences_dev_options -> DevOptionsFragment()
+        R.xml.preferences_reviewer -> ReviewerOptionsFragment()
         R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
         else -> null
     }
