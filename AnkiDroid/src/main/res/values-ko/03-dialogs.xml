@@ -121,6 +121,8 @@
     <string name="multimedia_editor_failed">멀티미디어 편집기를 열기 실패</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">오디오 녹음 권한이 거부됨</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
@@ -157,11 +159,11 @@
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
+    <string name="help_item_anki_manual">Anki manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_get_help">Get help</string>
+    <string name="help_item_mailing_list">Mailing list</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">오류 보고</string>
     <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid 지원하기</string>
@@ -197,8 +199,6 @@
     <string name="import_deck_package">덱 패키지 (.apkg)</string>
     <string name="import_collection_package">컬렉션 패키지 (.colpkg)</string>
     <string name="import_csv">텍스트 파일 (.txt, .csv)</string>
-    <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">모든 덱의 하위 덱을 만들 수 없습니다</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">컬렉션 백업하기</string>
     <string name="backup_collection_message">아직 컬렉션을 백업하지 않았습니다. 데이터 손실이 일어날 수 있으므로 지금 백업하세요.</string>

@@ -37,14 +37,13 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.common.annotations.DuplicatedCode
-import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
@@ -53,6 +52,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
@@ -207,7 +207,7 @@ class NoteEditorTest : RobolectricTest() {
     fun verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
         enableNullCollection()
         val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
-        ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
+        ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.requireActivity().onBackPressedDispatcher.onBackPressed()
                 assertThat("Pressing back should finish the activity", noteEditor.requireActivity().isFinishing)
@@ -220,7 +220,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun testHandleMultimediaActionsDisplaysBottomSheet() {
         val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
-        ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
+        ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.showMultimediaBottomSheet()
 
@@ -247,7 +247,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat("Selected deck ID should be the current deck id", editor.deckId, equalTo(currentDid))
         assertThat(
             "Deck ID in the intent should be the selected deck id",
-            copyNoteBundle.getLong(NoteEditor.EXTRA_DID, -404L),
+            copyNoteBundle.getLong(NoteEditorFragment.EXTRA_DID, -404L),
             equalTo(currentDid),
         )
         assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.deckId, equalTo(currentDid))
@@ -274,7 +274,7 @@ class NoteEditorTest : RobolectricTest() {
             assertThat(editor.currentFieldStrings.toList(), contains(newFirstField, initSecondField))
 
             editor.saveNote()
-            waitForAsyncTasksToComplete()
+            advanceRobolectricLooper()
             val actual = editor.currentFieldStrings.toList()
 
             assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))
@@ -446,7 +446,7 @@ class NoteEditorTest : RobolectricTest() {
             assertThat("setup: deckId", col.notetypes.byName("Basic")!!.did, equalTo(1))
 
             getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
-                editor.onDeckSelected(SelectableDeck(reversedDeckId, "Reversed"))
+                editor.onDeckSelected(SelectableDeck.Deck(reversedDeckId, "Reversed"))
                 editor.setField(0, "Hello")
                 editor.saveNote()
             }
@@ -485,7 +485,7 @@ class NoteEditorTest : RobolectricTest() {
     private fun moveToDynamicDeck(note: Note): DeckId {
         val dyn = addDynamicDeck("All")
         col.decks.select(dyn)
-        col.sched.rebuildDyn()
+        col.sched.rebuildFilteredDeck(dyn)
         assertThat("card is in dynamic deck", note.firstCard().did, equalTo(dyn))
         return dyn
     }
@@ -499,11 +499,11 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
-    private fun getCopyNoteIntent(editor: NoteEditor): Bundle {
+    private fun getCopyNoteIntent(editor: NoteEditorFragment): Bundle {
         val editorShadow = shadowOf(editor.requireActivity())
         editor.copyNote()
         val intent = editorShadow.peekNextStartedActivityForResult().intent
-        return intent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)!!
+        return intent.extras ?: Bundle()
     }
 
     private fun Spinner.getItemIndex(toFind: Any): Int? {
@@ -537,7 +537,7 @@ class NoteEditorTest : RobolectricTest() {
             NoteType.IMAGE_OCCLUSION -> col.notetypes.byName("Image Occlusion")
         }
 
-    private fun getNoteEditorAddingNote(from: FromScreen): NoteEditor {
+    private fun getNoteEditorAddingNote(from: FromScreen): NoteEditorFragment {
         ensureCollectionLoadIsSynchronous()
         val bundle =
             when (from) {
@@ -551,7 +551,7 @@ class NoteEditorTest : RobolectricTest() {
         front: String,
         back: String,
         from: FromScreen,
-    ): NoteEditor {
+    ): NoteEditorFragment {
         val n = super.addBasicNote(front, back)
         return getNoteEditorEditingExistingBasicNote(n, from)
     }
@@ -559,7 +559,7 @@ class NoteEditorTest : RobolectricTest() {
     private fun getNoteEditorEditingExistingBasicNote(
         n: Note,
         from: FromScreen,
-    ): NoteEditor {
+    ): NoteEditorFragment {
         val bundle =
             when (from) {
                 REVIEWER -> NoteEditorLauncher.EditCard(n.firstCard().id, DEFAULT).toBundle()
@@ -571,22 +571,22 @@ class NoteEditorTest : RobolectricTest() {
     fun openNoteEditorWithArgs(
         arguments: Bundle,
         action: String? = null,
-    ): NoteEditor {
+    ): NoteEditorFragment {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
-                SingleFragmentActivity::class.java,
+                NoteEditorActivity::class.java,
                 NoteEditorLauncher.PassArguments(arguments).toIntent(targetContext, action),
             )
-        return activity.getEditor()
+        return activity.getNoteEditorFragment()
     }
 
     @DuplicatedCode("NoteEditor in androidTest")
     @Throws(Throwable::class)
-    fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditor) -> Unit) {
+    fun ActivityScenario<NoteEditorActivity>.onNoteEditor(block: (NoteEditorFragment) -> Unit) {
         val wrapped = AtomicReference<Throwable?>(null)
-        this.onActivity { activity: SingleFragmentActivity ->
+        this.onActivity { activity: NoteEditorActivity ->
             try {
-                val editor = activity.getEditor()
+                val editor = activity.getNoteEditorFragment()
                 block(editor)
             } catch (t: Throwable) {
                 wrapped.set(t)
@@ -596,7 +596,8 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @DuplicatedCode("NoteEditor in androidTest")
-    fun SingleFragmentActivity.getEditor(): NoteEditor = supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
+    fun NoteEditorActivity.getNoteEditorFragment(): NoteEditorFragment =
+        supportFragmentManager.findFragmentById(R.id.note_editor_fragment_frame) as NoteEditorFragment
 
     private enum class FromScreen {
         DECK_LIST,
@@ -621,7 +622,7 @@ class NoteEditorTest : RobolectricTest() {
         private var firstField: String? = null
         private var secondField: String? = null
 
-        fun build(): NoteEditor {
+        fun build(): NoteEditorFragment {
             val editor = buildInternal()
             advanceRobolectricLooper()
             advanceRobolectricLooper()
@@ -633,7 +634,7 @@ class NoteEditorTest : RobolectricTest() {
             return editor
         }
 
-        fun buildInternal(): NoteEditor {
+        fun buildInternal(): NoteEditorFragment {
             col.notetypes.setCurrent(notetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER)
             advanceRobolectricLooper()

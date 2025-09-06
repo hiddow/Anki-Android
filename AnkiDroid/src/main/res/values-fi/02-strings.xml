@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Avaa laatikosto</string>
     <string name="drawer_close">Sulje laatikosto</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Korttipakka:</string>
     <string name="CardEditorNoteDeck">Pakka:</string>
     <string name="CardEditorModel">Tyyppi:</string>
@@ -82,6 +83,7 @@
     <string name="webview_crash_fatal">Kriittinen virhe: WebView-renderöijä kaatui. Syy: %s</string>
     <string name="webview_crash_loop_dialog_title">Järjestelmän WebView Renderöinti Epäonnistui</string>
     <string name="webview_crash_loop_dialog_content">Järjestelmän WebView ei pystynyt näyttämään korttia \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Liput</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Building list of tags&#8230;</string>
@@ -107,6 +109,11 @@
     <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
     <string name="missing_note_type">Muistiinpanotyyppejä ei löytynyt</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Aikaikkuna saavutettu</string>
     <plurals name="timebox_reached">
@@ -144,7 +151,7 @@
     <string name="import_error_handle_exception">Tiedoston tuonti epäonnistui\n\n%s</string>
     <string name="import_error_not_apkg_extension">Tiedostolla ”%s” ei ole .apkg tai .colpkg päätettä</string>
     <string name="import_error_load_imported_database">Ankin tietokannan (.anki2) korvaamista ei vielä tueta. Katso korvausohjeet käyttöoppaasta.</string>
-    <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
+    <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti Anki-tiedostoja: \n%s</string>
     <string name="import_error_copy_to_cache">Tiedoston tallentaminen välimuistiin epäonnistui (tallennustila on mahdollisesti loppunut).</string>
     <string name="import_interrupted">Tuonti keskeytyi: AnkiDroid suljettiin</string>
     <string name="export_ready_title">Vienti valmis</string>
@@ -174,11 +181,6 @@
     <string name="tag_editor_add_feedback">Paina ”%2$s” vahvistaaksesi ”%1$s”:n lisääminen</string>
     <string name="tag_editor_add_feedback_existing">Olemassa oleva tunniste ”%1$s” valittu</string>
     <!-- Time spans -->
-    <string name="reminder_title">Älä unohda opiskella tänään!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d kortti kerrattavana %1$s :ssa</item>
-        <item quantity="other">%2$d korttia kerrattavana %1$s :ssa</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Virhe jaettaessa apkg-tiedostoa</string>
     <!-- Import and export v2 feedback -->
@@ -255,7 +257,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Lataa pakka</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in Browser</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
     <string name="try_again">Yritä uudelleen</string>
     <string name="cancel_download">Peruuta lataus</string>
     <string name="cancel_download_question_title">Peruutetaanko lataus?</string>
@@ -322,6 +324,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">Kirjaudu sisään ladataksesi lisää pakkoja</string>
     <string name="deck_description_field_hint">Kuvaus</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Kopiointi epäonnistui</string>
     <string name="card_browser_unavailable_when_notes_mode">Ei saatavilla ”Muistiinpanot” -tilassa</string>
     <plurals name="unbury_cards_feedback">

@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Atvērt izvēlni</string>
     <string name="drawer_close">Aizvērt izvēlni</string>
+    <string name="note_message">Note saved</string>
     <string name="CardEditorCardDeck">Kartītes kava:</string>
     <string name="CardEditorNoteDeck">Kava:</string>
     <string name="CardEditorModel">Veids:</string>
@@ -82,6 +83,7 @@
     <string name="webview_crash_fatal">Nenovēršama kļūda: WebView atveidotājs avarēja. Cēlonis: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistēmas WebView atveidotāja atteice</string>
     <string name="webview_crash_loop_dialog_content">Sistēmas WebView neizdevās attēlot kartīti \"%1$s\".\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Karogi</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Veido birku sarakstu&#8230;</string>
@@ -108,6 +110,11 @@
     <string name="confirm_map_cards_to_nothing">Jebkuras kartītes, kas nav ne pret ko kartētas, tiks izdzēstas. Ja piezīmei nav atlikusi neviena kartīte, tā tiks pazaudēta. Vai tiešām turpināt?</string>
     <string name="missing_note_type">Nav atrasts neviens piezīmju veids</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (tukša)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Sasniegts laika logs</string>
     <plurals name="timebox_reached">
@@ -158,7 +165,7 @@
     <string name="export_email_subject">AnkiDroid izgūtās zibkartītes: %s</string>
     <string name="export_email_text"><![CDATA[        Sveiciens!
         <br/><br/>
-        Šī ir Anki zibkartīšu kava, kas nosūtīta no ankiDroid[1].
+        Šī ir Anki zibkartīšu kava, kas nosūtīta no AnkiDroid[1].
         Mēģini to atvērt ar vienu no pieejamajām Anki lietotnēm[2] un izbaudīt vieglu un iedarbīgu mācīšanos!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
@@ -177,12 +184,6 @@
     <string name="tag_editor_add_feedback">Pieskarties \"%2$s\", lai apstiprinātu \"%1$s\" pievienošanu</string>
     <string name="tag_editor_add_feedback_existing">Atlasīta esoša birka \"%1$s\"</string>
     <!-- Time spans -->
-    <string name="reminder_title">Neaizmirsti šodien mācīties!</string>
-    <plurals name="reminder_text">
-        <item quantity="zero">%2$d izskatāmu kartīšu kavā \"%1$s\"</item>
-        <item quantity="one">%2$d izskatāma kartīte kavā \"%1$s\"</item>
-        <item quantity="other">%2$d izskatāmas kartītes kavā \"%1$s\"</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Kļūda .apkg datnes kopīgošanas laikā</string>
     <!-- Import and export v2 feedback -->
@@ -327,6 +328,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Neizdevās atvērt teksta pārveidošanas runā iestatījumus</string>
     <string name="shared_decks_login_required">Lūgums pieteikteis, lai lejupielādētu vairāk kavu</string>
     <string name="deck_description_field_hint">Apraksts</string>
+    <string name="deck_description_saved">Description updated</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Kopēšana neizdevās</string>
     <string name="card_browser_unavailable_when_notes_mode">Nav pieejams piezīmju skatā</string>
     <plurals name="unbury_cards_feedback">

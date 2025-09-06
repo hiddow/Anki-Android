@@ -48,7 +48,7 @@
     <string name="youre_offline">أنت غير متصل بالإنترنت</string>
     <string name="sync_error">خطأ في المزامنة</string>
     <string name="vague_error" comment="Network error dialog title">عُطل</string>
-    <string name="retry">حاوِل مجددًا</string>
+    <string name="retry">إعادة المحاولة</string>
     <string name="menu_get_shared_decks">احصل على رزم مشاركة</string>
     <string name="connection_error_message">حدث خطأ في الشبكة</string>
     <string name="not_logged_in_title">سَجِّل الدخول إلى آنكي ويب</string>
@@ -80,6 +80,6 @@
     <string name="full_sync_confirmation">يتطلب هذا التغيير رفعًا كاملًا لقاعدة البيانات عندما تُزامِن في المرة القادمة. إن كانت لديك مراجعات أو غيرها من التغييرات في جهاز آخر لم يُزامَن مع هذا الجهاز بعد، فإنك ستفقدها. هل تريد الاستمرار؟</string>
     <string name="full_sync_confirmation_upgrade">نتيجة لعطل في إصدار آنكي درويد المثبت سابقًا، يُنصح بفرض مزامنة كاملة.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">زامِن (باتجاه واحد)</string>
-    <string name="sync_menu_title_no_account">زامِن (سجِّل الدخول)</string>
+    <string name="sync_menu_title_one_way_sync">مزامنة (باتجاه واحد)</string>
+    <string name="sync_menu_title_no_account">مزامنة (تسجيل دخول)</string>
 </resources>

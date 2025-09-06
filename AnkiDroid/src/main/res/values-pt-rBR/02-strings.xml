@@ -47,6 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir gaveta</string>
     <string name="drawer_close">Fechar gaveta</string>
+    <string name="note_message">Nota salva</string>
     <string name="CardEditorCardDeck">Baralho de cartões:</string>
     <string name="CardEditorNoteDeck">Baralho:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -82,6 +83,7 @@
     <string name="webview_crash_fatal">Erro Fatal: WebView renderer crashou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Falha no System Rendering WebView</string>
     <string name="webview_crash_loop_dialog_content">O System WebView falhou ao renderizar o card \'%1$s\'.\n %2$s</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Criando lista de tags&#8230;</string>
@@ -107,6 +109,11 @@
     <string name="confirm_map_cards_to_nothing">Quaisquer cards não-mapeados serão removidos. Se não houverem cards para uma nota, ela será perdida. Tem certeza de que deseja continuar?</string>
     <string name="missing_note_type">Nenhum tipo de nota encontrado</string>
     <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (vazio)</string>
+    <!-- Image cropper -->
+    <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
+    <string name="image_cropper_action_flip" maxLength="28" comment="Action in image cropper screen">Flip</string>
+    <string name="image_cropper_action_flip_horizontally" maxLength="28" comment="Submenu action in image cropper screen">Flip horizontally</string>
+    <string name="image_cropper_action_flip_vertically" maxLength="28" comment="Submenu action in image cropper screen">Flip vertically</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Caixa do tempo alcançada</string>
     <plurals name="timebox_reached">
@@ -144,7 +151,7 @@
     <string name="import_error_handle_exception">Falha ao importar arquivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
-    <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
+    <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos Anki: \n%s</string>
     <string name="import_error_copy_to_cache">Falha ao armazenar em cache o arquivo (possivelmente sem espaço de armazenamento)</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_ready_title">Exportação pronta</string>
@@ -174,11 +181,6 @@
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
     <!-- Time spans -->
-    <string name="reminder_title">Não se esqueça de estudar hoje!</string>
-    <plurals name="reminder_text">
-        <item quantity="one">%2$d novo card para revisar em %1$s</item>
-        <item quantity="other">%2$d novos cards para revisar em %1$s</item>
-    </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erro ao compartilhar arquivo apkg</string>
     <!-- Import and export v2 feedback -->
@@ -255,7 +257,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Baixar baralho</string>
-    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Abrir no Navegador</string>
+    <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
     <string name="try_again">Tentar Novamente</string>
     <string name="cancel_download">Cancelar download</string>
     <string name="cancel_download_question_title">Cancelar download?</string>
@@ -322,6 +324,9 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Falha ao abrir configurações de texto para fala</string>
     <string name="shared_decks_login_required">Faça login para baixar mais baralhos</string>
     <string name="deck_description_field_hint">Descrição</string>
+    <string name="deck_description_saved">Descrição atualizada</string>
+    <string name="format_deck_description_as_markdown">Formatar como Markdown</string>
+    <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Falha ao copiar</string>
     <string name="card_browser_unavailable_when_notes_mode">Indisponível no modo \'Notas\'</string>
     <plurals name="unbury_cards_feedback">
